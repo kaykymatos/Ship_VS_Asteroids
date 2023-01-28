@@ -14,8 +14,17 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
             guns.Shoot();
 
+        Vector3 movimentaX = 10f * horizontal * Time.deltaTime * Vector3.right;
+        Vector3 movimentaY = 10f * Time.deltaTime * vertical * Vector3.up;
+        transform.Translate(movimentaX + movimentaY);
 
-        transform.Translate(vertical * 10f * Vector3.up * Time.deltaTime + horizontal * 10f * Vector3.right * Time.deltaTime);
+    }
 
+    private void OnTriggerEnter(Collider collider)
+    {
+        if (collider.CompareTag("Asteroids"))
+        {
+            Destroy(collider.gameObject);
+        }
     }
 }

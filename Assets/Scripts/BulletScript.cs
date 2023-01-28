@@ -17,6 +17,14 @@ public class BulletScript : MonoBehaviour
         velocity = direction * speed;
 
     }
+    private void OnTriggerEnter(Collider collider)
+    {
+        if (collider.CompareTag("Asteroids"))
+        {
+            Destroy(collider.gameObject);
+            Destroy(gameObject);
+        }
+    }
     private void FixedUpdate()
     {
         Vector2 pos = transform.position;
