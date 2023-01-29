@@ -1,18 +1,30 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-
-
-    // Update is called once per frame
+    GunScript guns;
+    private void Start()
+    {
+        guns = GetComponentInChildren<GunScript>();
+    }
     void Update()
     {
         float vertical = Input.GetAxis("Vertical");
         float horizontal = Input.GetAxis("Horizontal");
+        if (Input.GetKeyDown(KeyCode.Space))
+            guns.Shoot();
 
-        transform.Translate(vertical *10f* Vector3.up * Time.deltaTime + horizontal * 10f * Vector3.right * Time.deltaTime);
+        Vector3 movimentaX = 10f * horizontal * Time.deltaTime * Vector3.right;
+        Vector3 movimentaY = 10f * Time.deltaTime * vertical * Vector3.up;
+        transform.Translate(movimentaX + movimentaY);
 
+    }
+
+    private void OnTriggerEnter(Collider collider)
+    {
+        if (collider.CompareTag("Asteroids"))
+        {
+            Destroy(collider.gameObject);
+        }
     }
 }
